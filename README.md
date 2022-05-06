@@ -1,4 +1,4 @@
-# face_recog_app
+# Facial Recognition App
 
 A new Flutter project.
 
