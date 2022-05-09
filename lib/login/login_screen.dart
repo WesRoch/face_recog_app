@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:face_recog_app/signup/sign_up.dart';
+import 'package:face_recog_app/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +14,28 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
+
+  dynamicAppBar() {
+    return AppBar(
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return WelcomeScreen();
+                },
+              ),
+            );
+          }),
+      // backgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      toolbarHeight: 50,
+      iconTheme: IconThemeData(color: Colors.white),
+    );
+  }
 
   Widget buildEmail() {
     return Column(
@@ -132,10 +156,39 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           'LOGIN',
           style: TextStyle(
-              color: Color(0xffbae1ff),
-              fontSize: 18,
-              fontWeight: FontWeight.bold),
+              color: Colors.black38, fontSize: 18, fontWeight: FontWeight.bold),
         ),
+      ),
+    );
+  }
+
+  Widget buildSignUpBtn() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return SignUpScreen();
+            },
+          ),
+        );
+      },
+      child: RichText(
+        text: TextSpan(children: [
+          TextSpan(
+              text: 'Don\'t have an Account? ',
+              style: TextStyle(
+                  color: Colors.black26,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500)),
+          TextSpan(
+              text: 'Sign Up',
+              style: TextStyle(
+                  color: Colors.black26,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold))
+        ]),
       ),
     );
   }
@@ -143,6 +196,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: dynamicAppBar(),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -163,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ])),
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 260),
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 120),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -190,7 +245,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      buildLoginBtn()
+                      buildLoginBtn(),
+                      buildSignUpBtn()
                     ],
                   ),
                 ),
