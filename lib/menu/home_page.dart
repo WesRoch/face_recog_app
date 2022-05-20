@@ -39,6 +39,7 @@ class HomePage extends StatelessWidget {
                     onPressed: () {},
                   ),
                   IconButton(
+                    //Thinking on using another icon for missing person
                     icon: const Icon(Icons.person_search_outlined),
                     iconSize: 26,
                     onPressed: () {},
