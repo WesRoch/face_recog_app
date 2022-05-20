@@ -6,12 +6,22 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Center(child: Text('Fala Galera')),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Positioned(
+            bottom: 0,
+            top: 0,
+            child: Image.asset('assets/images/img_logo.png'),
+          )
+        ],
+      )),
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.camera_alt_outlined),
         backgroundColor: const Color.fromARGB(255, 70, 160, 235),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -29,7 +39,8 @@ class HomePage extends StatelessWidget {
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: const Icon(Icons.list),
+                    icon: const Icon(Icons.person_search_outlined),
+                    iconSize: 26,
                     onPressed: () {},
                   ),
                   const SizedBox(
