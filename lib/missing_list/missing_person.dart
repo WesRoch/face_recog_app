@@ -1,27 +1,36 @@
+import 'package:face_recog_app/menu/home_page.dart';
 import 'package:flutter/material.dart';
+import 'missing_person_controller.dart';
 
 class MissingPerson extends StatelessWidget {
   const MissingPerson({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final lista = MissingPersonController().lista;
+
     return Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Positioned(
-            bottom: 0,
-            top: 0,
-            child: Image.asset('assets/images/img_logo.png'),
-          )
-        ],
-      )),
+      appBar: AppBar(
+        title: const Text('Missing Person'),
+        backgroundColor: const Color.fromARGB(255, 70, 160, 235),
+      ),
+      body: ListView.separated(
+        itemBuilder: (BuildContext context, int people) {
+          return ListTile(
+            leading: const Icon(Icons.person),
+            title: Text(lista[people].name),
+            trailing: Text(lista[people].id.toString()),
+          );
+        },
+        padding: const EdgeInsets.all(16),
+        separatorBuilder: (_, __) => const Divider(),
+        itemCount: lista.length,
+      ),
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.camera_alt_outlined),
+        child: const Icon(Icons.add),
         backgroundColor: const Color.fromARGB(255, 70, 160, 235),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -36,7 +45,16 @@ class MissingPerson extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.home),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const HomePage();
+                          },
+                        ),
+                      );
+                    },
                   ),
                   IconButton(
                     icon: const Icon(Icons.person_search_outlined),
