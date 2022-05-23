@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return const MissingPerson();
+                            return MissingPersonPage();
                           },
                         ),
                       );
