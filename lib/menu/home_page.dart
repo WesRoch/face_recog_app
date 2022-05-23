@@ -1,3 +1,4 @@
+import 'package:face_recog_app/missing_list/missing_person.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -42,7 +43,16 @@ class HomePage extends StatelessWidget {
                     //Thinking on using another icon for missing person
                     icon: const Icon(Icons.person_search_outlined),
                     iconSize: 26,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const MissingPerson();
+                          },
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(
                     width: 24,
