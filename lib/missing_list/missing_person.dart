@@ -1,9 +1,25 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:face_recog_app/menu/home_page.dart';
 import 'package:flutter/material.dart';
 import 'missing_person_controller.dart';
+import 'missing_person_detalhes.dart';
+import 'missing_person_model.dart';
 
-class MissingPerson extends StatelessWidget {
-  const MissingPerson({Key? key}) : super(key: key);
+class MissingPersonPage extends StatefulWidget {
+  MissingPersonPage({Key? key}) : super(key: key);
+
+  @override
+  _MissingPersonPageState createState() => _MissingPersonPageState();
+}
+
+class _MissingPersonPageState extends State<MissingPersonPage> {
+  mostrarDetalhes(MissingPerson pessoa) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => MissingPersonDetalhes(pessoa: pessoa)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +31,14 @@ class MissingPerson extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 70, 160, 235),
       ),
       body: ListView.separated(
-        itemBuilder: (BuildContext context, int people) {
+        itemBuilder: (BuildContext context, int pessoa) {
           return ListTile(
             leading: const Icon(Icons.person),
-            title: Text(lista[people].name),
-            trailing: Text(lista[people].id.toString()),
+            title: Text(
+              lista[pessoa].name,
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+            ),
+            onTap: () => mostrarDetalhes(lista[pessoa]),
           );
         },
         padding: const EdgeInsets.all(16),
@@ -57,6 +76,7 @@ class MissingPerson extends StatelessWidget {
                     },
                   ),
                   IconButton(
+                    //Missing Person photo/icon
                     icon: const Icon(Icons.person_search_outlined),
                     onPressed: () {},
                   ),
