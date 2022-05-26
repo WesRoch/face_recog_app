@@ -1,6 +1,9 @@
 import 'package:face_recog_app/missing_list/missing_person.dart';
 import 'package:flutter/material.dart';
 
+import '../missing_list/missing_person_add.dart';
+import '../missing_list/missing_person_compare.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -19,12 +22,6 @@ class HomePage extends StatelessWidget {
         ],
       )),
       extendBody: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.camera_alt_outlined),
-        backgroundColor: const Color.fromARGB(255, 70, 160, 235),
-      ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: const Color.fromARGB(255, 70, 160, 235),
@@ -54,16 +51,31 @@ class HomePage extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(
-                    width: 24,
+                  IconButton(
+                    icon: const Icon(Icons.person_add),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MissingPersonAddPage();
+                          },
+                        ),
+                      );
+                    },
                   ),
                   IconButton(
-                    icon: const Icon(Icons.person),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.settings),
-                    onPressed: () {},
+                    icon: const Icon(Icons.face),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MissingPersonComparePage();
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               )),
