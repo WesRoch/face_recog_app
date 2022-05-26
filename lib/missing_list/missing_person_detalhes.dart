@@ -34,9 +34,6 @@ class _MissingPersonDetalhesState extends State<MissingPersonDetalhes> {
                     child: Icon(Icons.person),
                     width: 50,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
                   Container(width: 10),
                   Text(
                     widget.pessoa.name,

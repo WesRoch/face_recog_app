@@ -2,6 +2,8 @@
 
 import 'package:face_recog_app/menu/home_page.dart';
 import 'package:flutter/material.dart';
+import 'missing_person_add.dart';
+import 'missing_person_compare.dart';
 import 'missing_person_controller.dart';
 import 'missing_person_detalhes.dart';
 import 'missing_person_model.dart';
@@ -38,6 +40,11 @@ class _MissingPersonPageState extends State<MissingPersonPage> {
               lista[pessoa].name,
               style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
             ),
+            subtitle: Text(
+              lista[pessoa].id.toString(),
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+            ),
+            trailing: Icon(Icons.list),
             onTap: () => mostrarDetalhes(lista[pessoa]),
           );
         },
@@ -46,12 +53,6 @@ class _MissingPersonPageState extends State<MissingPersonPage> {
         itemCount: lista.length,
       ),
       extendBody: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
-        backgroundColor: const Color.fromARGB(255, 70, 160, 235),
-      ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: const Color.fromARGB(255, 70, 160, 235),
@@ -69,7 +70,7 @@ class _MissingPersonPageState extends State<MissingPersonPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return const HomePage();
+                            return HomePage();
                           },
                         ),
                       );
@@ -80,17 +81,32 @@ class _MissingPersonPageState extends State<MissingPersonPage> {
                     icon: const Icon(Icons.person_search_outlined),
                     onPressed: () {},
                   ),
-                  const SizedBox(
-                    width: 24,
-                  ),
                   IconButton(
-                    icon: const Icon(Icons.person),
+                    icon: const Icon(Icons.person_add),
                     iconSize: 26,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MissingPersonAddPage();
+                          },
+                        ),
+                      );
+                    },
                   ),
                   IconButton(
-                    icon: const Icon(Icons.settings),
-                    onPressed: () {},
+                    icon: const Icon(Icons.face),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MissingPersonComparePage();
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               )),
