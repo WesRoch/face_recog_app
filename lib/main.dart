@@ -1,4 +1,4 @@
-import 'package:face_recog_app/welcome/welcome_screen.dart';
+import 'package:face_recog_app/pages/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:face_recog_app/constants.dart';
 
