@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class MissingPerson {
   final String id;
   final String name;
@@ -8,7 +10,7 @@ class MissingPerson {
   final String avatarUrl;
 
   const MissingPerson({
-    required this.id,
+    this.id = "",
     required this.name,
     required this.birthday,
     required this.birthplace,

@@ -1,56 +1,21 @@
-import 'package:face_recog_app/pages/missing_person_list.dart';
+// ignore_for_file: prefer_const_constructors
+
+import 'package:face_recog_app/models/missing_person_model.dart';
+import 'package:face_recog_app/pages/home_page.dart';
+import 'package:face_recog_app/provider/persons.dart';
+import 'package:face_recog_app/widgets/missing_person_widget.dart';
 import 'package:flutter/material.dart';
-import 'missing_person_add.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+class MissingPersonList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final PersonsProvider users = Provider.of(context);
     return Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Positioned(
-            bottom: 0,
-            top: 0,
-            child: Image.asset('assets/images/img_logo.png'),
-          )
-        ],
-      )),
-      extendBody: true,
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        color: const Color.fromARGB(255, 70, 160, 235),
-        child: IconTheme(
-          data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-          child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.home),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    //Thinking on using another icon for missing person
-                    icon: const Icon(Icons.person_search_outlined),
-                    iconSize: 26,
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.person_add),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.face),
-                    onPressed: () {},
-                  ),
-                ],
-              )),
-        ),
+      appBar: AppBar(title: const Text('Missing Person List')),
+      body: ListView.builder(
+        itemCount: users.count,
+        itemBuilder: (ctx, i) => ListPersons(users.byIndex(i)),
       ),
     );
   }

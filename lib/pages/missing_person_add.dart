@@ -1,56 +1,45 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:face_recog_app/pages/missing_person_list.dart';
+import 'package:face_recog_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'missing_person_add.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MissingPersonAdd extends StatelessWidget {
+  const MissingPersonAdd({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Positioned(
-            bottom: 0,
-            top: 0,
-            child: Image.asset('assets/images/img_logo.png'),
-          )
-        ],
-      )),
-      extendBody: true,
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        color: const Color.fromARGB(255, 70, 160, 235),
-        child: IconTheme(
-          data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-          child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.home),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    //Thinking on using another icon for missing person
-                    icon: const Icon(Icons.person_search_outlined),
-                    iconSize: 26,
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.person_add),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.face),
-                    onPressed: () {},
-                  ),
-                ],
-              )),
-        ),
+      appBar: AppBar(
+        title: Text('Missing Person'),
+        actions: <Widget>[IconButton(onPressed: () {}, icon: Icon(Icons.save))],
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(15),
+        child: Form(
+            child: Column(
+          children: [
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Name'),
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Birthday'),
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Birthplace'),
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Place'),
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Details'),
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Photo URL'),
+            )
+          ],
+        )),
       ),
     );
   }
