@@ -1,22 +1,25 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
-import 'package:face_recog_app/pages/home_page.dart';
-import 'package:face_recog_app/pages/missing_person.dart';
+import 'package:face_recog_app/pages/missing_person_list.dart';
 import 'package:flutter/material.dart';
-import 'missing_person_compare.dart';
+import 'missing_person_add.dart';
 
-class MissingPersonAddPage extends StatefulWidget {
-  MissingPersonAddPage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-  @override
-  _MissingPersonAddPageState createState() => _MissingPersonAddPageState();
-}
-
-class _MissingPersonAddPageState extends State<MissingPersonAddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Missing Person')),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Positioned(
+            bottom: 0,
+            top: 0,
+            child: Image.asset('assets/images/img_logo.png'),
+          )
+        ],
+      )),
+      extendBody: true,
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: const Color.fromARGB(255, 70, 160, 235),
@@ -29,48 +32,21 @@ class _MissingPersonAddPageState extends State<MissingPersonAddPage> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.home),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return HomePage();
-                          },
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                   ),
                   IconButton(
-                    //Missing Person photo/icon
+                    //Thinking on using another icon for missing person
                     icon: const Icon(Icons.person_search_outlined),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return MissingPersonPage();
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.person_add),
                     iconSize: 26,
                     onPressed: () {},
                   ),
                   IconButton(
+                    icon: const Icon(Icons.person_add),
+                    onPressed: () {},
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.face),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return MissingPersonComparePage();
-                          },
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                   ),
                 ],
               )),

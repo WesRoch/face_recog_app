@@ -1,18 +1,19 @@
 class MissingPerson {
-  late int id;
-  late String name;
-  late String birthday;
-  late String birthplace;
-  late String place;
-  late String details;
-  late int userId;
+  final String id;
+  final String name;
+  final String birthday;
+  final String birthplace;
+  final String place;
+  final String details;
+  final String avatarUrl;
 
-  MissingPerson(
-      {required this.id,
-      required this.name,
-      required this.birthday,
-      required this.birthplace,
-      required this.details,
-      required this.place,
-      required this.userId});
+  const MissingPerson({
+    required this.id,
+    required this.name,
+    required this.birthday,
+    required this.birthplace,
+    required this.details,
+    required this.place,
+    required this.avatarUrl,
+  });
 }
