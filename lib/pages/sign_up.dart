@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
-import 'package:http/http.dart';
+import 'package:face_recog_app/routes/app_routes.dart';
 import 'package:face_recog_app/pages/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SignUpState();
@@ -14,28 +14,6 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpState extends State<SignUpScreen> {
   bool isRememberMe = false;
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  void login(String email, password) async {
-    try {
-      Response response =
-          await post(Uri.parse('https://reqres.in/api/register'), body: {
-        'email': email,
-        'passoword': password,
-      });
-
-      if (response.statusCode == 200) {
-        print('account created successfully');
-      } else {
-        print('failed');
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 
   dynamicAppBar() {
     return AppBar(
@@ -84,7 +62,6 @@ class _SignUpState extends State<SignUpScreen> {
           ),
           height: 60,
           child: TextField(
-            controller: nameController,
             keyboardType: TextInputType.name,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -124,7 +101,6 @@ class _SignUpState extends State<SignUpScreen> {
           ),
           height: 60,
           child: TextField(
-            controller: emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -164,7 +140,6 @@ class _SignUpState extends State<SignUpScreen> {
           ),
           height: 60,
           child: TextField(
-            controller: passwordController,
             obscureText: true,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -186,8 +161,7 @@ class _SignUpState extends State<SignUpScreen> {
       child: RaisedButton(
         elevation: 5,
         onPressed: () {
-          login(passwordController.text.toString(),
-              passwordController.text.toString());
+          Navigator.of(context).pushNamed(AppRoutes.HOME);
         },
         padding: EdgeInsets.all(15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

@@ -10,12 +10,12 @@ class MissingPerson {
   final String avatarUrl;
 
   const MissingPerson({
-    this.id = "",
-    required this.name,
-    required this.birthday,
-    required this.birthplace,
-    required this.details,
-    required this.place,
-    required this.avatarUrl,
+    this.id,
+    @required this.name,
+    @required this.birthday,
+    @required this.birthplace,
+    @required this.details,
+    @required this.place,
+    @required this.avatarUrl,
   });
 }

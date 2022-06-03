@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
         ),
         // ignore: prefer_const_constructors
         routes: {
-          AppRoutes.HOME: (_) => WelcomeScreen(),
-          AppRoutes.PERSON_FORM: (_) => const MissingPersonAdd()
+          AppRoutes.HOME: (_) => const WelcomeScreen(),
+          AppRoutes.PERSON_FORM: (_) => MissingPersonAdd()
         },
       ),
     );
