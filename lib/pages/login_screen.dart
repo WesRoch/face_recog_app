@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:face_recog_app/pages/home_page.dart';
-import 'package:face_recog_app/pages/sign_up.dart';
 import 'package:face_recog_app/pages/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:face_recog_app/api/rest_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -14,135 +16,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isRememberMe = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  dynamicAppBar() {
-    return AppBar(
-      leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return WelcomeScreen();
-                },
-              ),
-            );
-          }),
-      // backgroundColor: Colors.transparent,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      toolbarHeight: 50,
-      iconTheme: IconThemeData(color: Colors.white),
-    );
-  }
-
-  Widget buildEmail() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Email',
-          style: TextStyle(
-            color: Colors.black38,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 10),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
-            ],
-          ),
-          height: 60,
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
-            style: TextStyle(color: Colors.black87),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14),
-                prefixIcon: Icon(Icons.email, color: Color(0xffbae1ff)),
-                hintText: 'Email',
-                hintStyle: TextStyle(color: Colors.black38)),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget buildPassword() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Password',
-          style: TextStyle(
-            color: Colors.black38,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 10),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
-            ],
-          ),
-          height: 60,
-          child: TextField(
-            obscureText: true,
-            style: TextStyle(color: Colors.black87),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14),
-                prefixIcon: Icon(Icons.lock, color: Color(0xffbae1ff)),
-                hintText: 'Password',
-                hintStyle: TextStyle(color: Colors.black38)),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget buildRememberCb() {
-    return Container(
-      height: 20,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: isRememberMe,
-              checkColor: Colors.blue,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  isRememberMe = value;
-                });
-              },
-            ),
-          ),
-          Text(
-            'Remember me',
-            style:
-                TextStyle(color: Colors.black38, fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
-    );
-  }
+  //call Shared prefernces object here
+  SharedPreferences _sharedPreferences;
 
   Widget buildLoginBtn() {
     return Container(
@@ -151,14 +30,17 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return HomePage();
-              },
-            ),
-          );
+          _emailController.text.isNotEmpty &&
+                  _passwordController.text.isNotEmpty
+              ? doLogin(_emailController.text, _passwordController.text)
+              : Fluttertoast.showToast(
+                  msg: "All fields are required",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
         },
         padding: EdgeInsets.all(15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -172,42 +54,29 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget buildSignUpBtn() {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return SignUpScreen();
-            },
-          ),
-        );
-      },
-      child: RichText(
-        text: TextSpan(children: [
-          TextSpan(
-              text: 'Don\'t have an Account? ',
-              style: TextStyle(
-                  color: Colors.black26,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500)),
-          TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                  color: Colors.black26,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold))
-        ]),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: dynamicAppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return WelcomeScreen();
+                  },
+                ),
+              );
+            }),
+        // backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: 50,
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -243,20 +112,93 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 30,
                       ),
-                      buildEmail(),
-                      SizedBox(
-                        height: 25,
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Email',
+                              style: TextStyle(
+                                color: Colors.black38,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6,
+                                      offset: Offset(0, 2))
+                                ],
+                              ),
+                              height: 60,
+                              child: TextFormField(
+                                controller: _emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(color: Colors.black87),
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.only(top: 14),
+                                    prefixIcon: Icon(Icons.email,
+                                        color: Color(0xffbae1ff)),
+                                    hintText: 'Email',
+                                    hintStyle:
+                                        TextStyle(color: Colors.black38)),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Password',
+                              style: TextStyle(
+                                color: Colors.black38,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6,
+                                      offset: Offset(0, 2))
+                                ],
+                              ),
+                              height: 60,
+                              child: TextFormField(
+                                controller: _passwordController,
+                                obscureText: true,
+                                style: TextStyle(color: Colors.black87),
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.only(top: 14),
+                                    prefixIcon: Icon(Icons.lock,
+                                        color: Color(0xffbae1ff)),
+                                    hintText: 'Password',
+                                    hintStyle:
+                                        TextStyle(color: Colors.black38)),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      buildPassword(),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      buildRememberCb(),
                       SizedBox(
                         height: 20,
                       ),
                       buildLoginBtn(),
-                      buildSignUpBtn()
                     ],
                   ),
                 ),
@@ -266,5 +208,25 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  doLogin(String email, String password) async {
+    _sharedPreferences = await SharedPreferences.getInstance();
+    var res = await userLogin(email.trim(), password.trim());
+    print(res.toString());
+
+    if (res['success']) {
+      //set data
+      String userEmail = res['user']["email"];
+      String userId = res['user']["id"];
+      _sharedPreferences.setString('userid', userId);
+      _sharedPreferences.setString('useremail', userEmail);
+
+      Route route = MaterialPageRoute(builder: (_) => HomePage());
+      Navigator.pushReplacement(context, route);
+    } else {
+      Fluttertoast.showToast(
+          msg: 'Email and password not valid', textColor: Colors.red);
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:face_recog_app/pages/missing_person_list.dart';
+import 'package:face_recog_app/pages/user_profile_page.dart';
 import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
 import 'missing_person_add.dart';
@@ -58,7 +59,16 @@ class HomePage extends StatelessWidget {
                   ),
                   IconButton(
                     icon: const Icon(Icons.face),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return Perfil();
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               )),
