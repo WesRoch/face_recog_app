@@ -40,16 +40,16 @@ class HomePage extends StatelessWidget {
                     //Thinking on using another icon for missing person
                     icon: const Icon(Icons.person_search_outlined),
                     iconSize: 26,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return MissingPersonList();
-                          },
-                        ),
-                      );
-                    },
+                    // onPressed: () {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) {
+                    //         return MissingPersonList();
+                    //       },
+                    //     ),
+                    //   );
+                    // },
                   ),
                   IconButton(
                     icon: const Icon(Icons.person_add),

@@ -16,11 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => PersonsProvider(),
-        )
-      ],
+      // providers: [
+      //   ChangeNotifierProvider(
+      //     create: (ctx) => PersonsProvider(),
+      //   )
+      // ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Login Screen',

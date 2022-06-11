@@ -17,7 +17,7 @@ class Usuario {
         userId: json["id"],
         userName: json["name"],
         userEmail: json["email"],
-        userPassword: json["password"],
+        userPassword: json["password_hash"],
         avatar: json["avatar"],
       );
 
@@ -25,7 +25,7 @@ class Usuario {
         "id": userId,
         "name": userName,
         "email": userEmail,
-        "password": userPassword,
+        "password_hash": userPassword,
         "avatar": avatar,
       };
 }
