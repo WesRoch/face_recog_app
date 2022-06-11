@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider:
   http:
+  shared_preferences:
+  fluttertoast: ^8.0.9
   
 
 
