@@ -1,5 +1,8 @@
+import 'package:face_recog_app/api/rest_api.dart';
+import 'package:face_recog_app/pages/home_page.dart';
 import 'package:face_recog_app/provider/persons.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../models/missing_person_model.dart';
 
@@ -11,13 +14,17 @@ class MissingPersonAdd extends StatefulWidget {
 }
 
 class _MissingPersonAddState extends State<MissingPersonAdd> {
-  final _form = GlobalKey<FormState>();
-  final TextEditingController _controllerName = TextEditingController();
-  final TextEditingController _controllerBirthday = TextEditingController();
-  final TextEditingController _controllerBirthplace = TextEditingController();
-  final TextEditingController _controllerDetails = TextEditingController();
-  final TextEditingController _controllerPlace = TextEditingController();
-  final TextEditingController _controllerAvatarUrl = TextEditingController();
+  final _formPerson = GlobalKey<FormState>();
+  final TextEditingController _controllerpersonName = TextEditingController();
+  final TextEditingController _controllerpersonBirthday =
+      TextEditingController();
+  final TextEditingController _controllerpersonBirthplace =
+      TextEditingController();
+  final TextEditingController _controllerpersonPlace = TextEditingController();
+  final TextEditingController _controllerpersonDetails =
+      TextEditingController();
+  final TextEditingController _controllerpersonUserId = TextEditingController();
+  final TextEditingController _controllerpersonImage = TextEditingController();
 
   final FocusNode _focusId = FocusNode();
   final FocusNode _focusName = FocusNode();
@@ -25,36 +32,36 @@ class _MissingPersonAddState extends State<MissingPersonAdd> {
   final FocusNode _focusBirthplace = FocusNode();
   final FocusNode _focusDetails = FocusNode();
   final FocusNode _focusPlace = FocusNode();
-  final FocusNode _focusAvatarUrl = FocusNode();
+  final FocusNode _focuspersonImage = FocusNode();
 
-  final Map<String, String> _formData = {};
+  // final Map<String, String> _formData = {};
 
-  void changeMissingPerson(MissingPerson person) {
-    if (person != null) {
-      _formData['id'] = person.id;
-      _formData['name'] = person.name;
-      _formData['birthday'] = person.birthday;
-      _formData['birthplace'] = person.birthplace;
-      _formData['details'] = person.details;
-      _formData['place'] = person.place;
-      _formData['avatarUrl'] = person.avatarUrl;
+  // void changeMissingPerson(MissingPerson person) {
+  //   if (person != null) {
+  //     _formData['id'] = person.id;
+  //     _formData['name'] = person.name;
+  //     _formData['birthday'] = person.birthday;
+  //     _formData['birthplace'] = person.birthplace;
+  //     _formData['details'] = person.details;
+  //     _formData['place'] = person.place;
+  //     _formData['avatarUrl'] = person.avatarUrl;
 
-      _controllerName.text = person.name;
-      _controllerBirthday.text = person.birthday;
-      _controllerBirthplace.text = person.birthplace;
-      _controllerDetails.text = person.details;
-      _controllerPlace.text = person.place;
-      _controllerAvatarUrl.text = person.avatarUrl;
-    }
-  }
+  //     _controllerName.text = person.name;
+  //     _controllerBirthday.text = person.birthday;
+  //     _controllerBirthplace.text = person.birthplace;
+  //     _controllerDetails.text = person.details;
+  //     _controllerPlace.text = person.place;
+  //     _controllerAvatarUrl.text = person.avatarUrl;
+  //   }
+  // }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final MissingPerson person = ModalRoute.of(context).settings.arguments;
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   final MissingPerson person = ModalRoute.of(context).settings.arguments;
 
-    changeMissingPerson(person);
-  }
+  //   changeMissingPerson(person);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,19 +69,43 @@ class _MissingPersonAddState extends State<MissingPersonAdd> {
       appBar: AppBar(
         title: const Text('Missing Person'),
         actions: <Widget>[
-          IconButton(onPressed: () => addOrChange(), icon: Icon(Icons.save))
+          IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () {
+                _controllerpersonName.text.isNotEmpty &&
+                        _controllerpersonBirthday.text.isNotEmpty &&
+                        _controllerpersonBirthplace.text.isNotEmpty &&
+                        _controllerpersonPlace.text.isNotEmpty &&
+                        _controllerpersonDetails.text.isNotEmpty &&
+                        _controllerpersonImage.text.isNotEmpty
+                    ? doRegisterPerson(
+                        _controllerpersonName.text,
+                        _controllerpersonBirthday.text,
+                        _controllerpersonBirthplace.text,
+                        _controllerpersonPlace.text,
+                        _controllerpersonDetails.text,
+                        _controllerpersonImage.text)
+                    : Fluttertoast.showToast(
+                        msg: "All fields are required",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+              })
         ],
       ),
       extendBody: true,
       body: Padding(
         padding: EdgeInsets.all(15),
         child: Form(
-            key: _form,
+            key: _formPerson,
             child: ListView(
               children: [
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Name'),
-                  controller: _controllerName,
+                  controller: _controllerpersonName,
                   validator: (value) {
                     if (value == null) {
                       return 'Insert a name';
@@ -83,11 +114,11 @@ class _MissingPersonAddState extends State<MissingPersonAdd> {
                   },
                   onFieldSubmitted: (_) =>
                       FocusScope.of(context).requestFocus(_focusBirthday),
-                  onSaved: (value) => _formData['name'] = value.trim(),
+                  // onSaved: (value) => _formData['name'] = value.trim(),
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Birthday'),
-                  controller: _controllerBirthday,
+                  controller: _controllerpersonBirthday,
                   validator: (value) {
                     if (value == null) {
                       return 'Insert a name';
@@ -97,11 +128,11 @@ class _MissingPersonAddState extends State<MissingPersonAdd> {
                   focusNode: _focusBirthday,
                   onFieldSubmitted: (_) =>
                       FocusScope.of(context).requestFocus(_focusBirthplace),
-                  onSaved: (value) => _formData['birthday'] = value.trim(),
+                  // onSaved: (value) => _formData['birthday'] = value.trim(),
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Birthplace'),
-                  controller: _controllerBirthplace,
+                  controller: _controllerpersonBirthplace,
                   validator: (value) {
                     if (value == null) {
                       return 'Insert a name';
@@ -111,11 +142,12 @@ class _MissingPersonAddState extends State<MissingPersonAdd> {
                   focusNode: _focusBirthplace,
                   onFieldSubmitted: (_) =>
                       FocusScope.of(context).requestFocus(_focusPlace),
-                  onSaved: (value) => _formData['birthplace'] = value.trim(),
+                  // onSaved: (value) => _formData['birthplace'] = value.trim(),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Place'),
-                  controller: _controllerPlace,
+                  decoration:
+                      InputDecoration(labelText: 'Place of Disappearance'),
+                  controller: _controllerpersonPlace,
                   validator: (value) {
                     if (value == null) {
                       return 'Insert a name';
@@ -125,11 +157,12 @@ class _MissingPersonAddState extends State<MissingPersonAdd> {
                   focusNode: _focusPlace,
                   onFieldSubmitted: (_) =>
                       FocusScope.of(context).requestFocus(_focusDetails),
-                  onSaved: (value) => _formData['place'] = value.trim(),
+                  // onSaved: (value) => _formData['place'] = value.trim(),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Details'),
-                  controller: _controllerDetails,
+                  decoration:
+                      InputDecoration(labelText: 'Disappearance Details'),
+                  controller: _controllerpersonDetails,
                   validator: (value) {
                     if (value == null) {
                       return 'Insert a name';
@@ -138,21 +171,21 @@ class _MissingPersonAddState extends State<MissingPersonAdd> {
                   },
                   focusNode: _focusDetails,
                   onFieldSubmitted: (_) =>
-                      FocusScope.of(context).requestFocus(_focusAvatarUrl),
-                  onSaved: (value) => _formData['details'] = value.trim(),
+                      FocusScope.of(context).requestFocus(_focuspersonImage),
+                  // onSaved: (value) => _formData['details'] = value.trim(),
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Photo URL'),
-                  controller: _controllerAvatarUrl,
+                  controller: _controllerpersonImage,
                   validator: (value) {
                     if (value == null) {
                       return 'Insert a name';
                     }
                     return null;
                   },
-                  focusNode: _focusAvatarUrl,
-                  onFieldSubmitted: (_) => addOrChange(),
-                  onSaved: (value) => _formData['avatarUrl'] = value.trim(),
+                  focusNode: _focuspersonImage,
+                  // onFieldSubmitted: (_) => addOrChange(),
+                  // onSaved: (value) => _formData['avatarUrl'] = value.trim(),
                 )
               ],
             )),
@@ -160,24 +193,42 @@ class _MissingPersonAddState extends State<MissingPersonAdd> {
     );
   }
 
-  void addOrChange() {
-    final isValid = _form.currentState.validate();
+  doRegisterPerson(
+      String personName,
+      String personBirthday,
+      String personBirthplace,
+      String personPlace,
+      String personDetails,
+      String personImage) async {
+    var res = await personRegister(personName, personBirthday, personBirthplace,
+        personPlace, personDetails, personImage);
+    print(res.toString());
 
-    if (isValid) {
-      _form.currentState.save();
-      Provider.of<PersonsProvider>(
-        context,
-        listen: false,
-      ).put(MissingPerson(
-          id: _formData['id'],
-          name: _formData['name'],
-          birthday: _formData['birthday'],
-          birthplace: _formData['birthplace'],
-          details: _formData['details'],
-          place: _formData['place'],
-          avatarUrl: _formData['avatarUrl']));
-
-      Navigator.of(context).pop();
-    }
+    // if (res['success']) {
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => const HomePage()));
+    // } else {
+    //   Fluttertoast.showToast(msg: 'Try again', textColor: Colors.red);
+    // }
   }
+  // void addOrChange() {
+  //   final isValid = _form.currentState.validate();
+
+  //   if (isValid) {
+  //     _form.currentState.save();
+  //     Provider.of<PersonsProvider>(
+  //       context,
+  //       listen: false,
+  //     ).put(MissingPerson(
+  //         id: _formData['id'],
+  //         name: _formData['name'],
+  //         birthday: _formData['birthday'],
+  //         birthplace: _formData['birthplace'],
+  //         details: _formData['details'],
+  //         place: _formData['place'],
+  //         avatarUrl: _formData['avatarUrl']));
+
+  //     Navigator.of(context).pop();
+  //   }
+  // }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:face_recog_app/pages/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -66,29 +68,24 @@ class PerfilUserState extends State {
                 Container(
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.all(10),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           InkWell(
                               child: ClipRRect(
                             borderRadius: BorderRadius.circular(50),
-                            child: Image.network(
-                              'http://www.someletras.com.br/paulo/' +
-                                  appData.message['avatar'],
-                              height: 50,
-                              width: 50,
+                            child: Image.asset(
+                              'assets/images/img_logo.png',
+                              height: 200,
+                              width: 200,
                               fit: BoxFit.cover,
                             ),
                           )),
-                          Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text(
-                              appData.message['nome'],
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
-                            ),
-                          ),
                         ]),
                     // decoration: BoxDecoration(
                     //     image: DecorationImage(
@@ -99,6 +96,9 @@ class PerfilUserState extends State {
                                   1 +
                               100.0,
                     )),
+                SizedBox(
+                  height: 100,
+                ),
                 Container(
                   child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -108,14 +108,14 @@ class PerfilUserState extends State {
                         Padding(
                           padding: EdgeInsets.only(left: 5, top: 10),
                           child: Text(
-                            "Nome: " + appData.message['nome'],
+                            "Nome: ",
                             style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: 5, top: 25),
                           child: Text(
-                            "e-mail: " + appData.message['email'],
+                            "e-mail: ",
                             style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
                         ),

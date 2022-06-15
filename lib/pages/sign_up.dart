@@ -23,6 +23,7 @@ class _SignUpState extends State<SignUpScreen> {
   final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+  final TextEditingController avatar = TextEditingController();
   final GlobalKey formkey = GlobalKey<FormState>();
 
   Widget buildSignUpBtn() {
