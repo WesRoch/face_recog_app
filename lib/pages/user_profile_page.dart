@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:face_recog_app/pages/home_page.dart';
 import 'package:face_recog_app/pages/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -39,6 +40,18 @@ class PerfilUserState extends State {
     //print(message);
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return HomePage();
+                    },
+                  ),
+                );
+              }),
           elevation: 5,
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -65,13 +78,16 @@ class PerfilUserState extends State {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
+                SizedBox(
+                  height: 30,
+                ),
                 Container(
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(0),
                           ),
                           SizedBox(
                             height: 10,

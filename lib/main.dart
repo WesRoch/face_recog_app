@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, duplicate_ignore
+
 import 'package:face_recog_app/pages/home_page.dart';
 import 'package:face_recog_app/pages/missing_person_add.dart';
 import 'package:face_recog_app/pages/welcome_screen.dart';
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.HOME: (_) => const WelcomeScreen(),
         AppRoutes.PERSON_FORM: (_) => MissingPersonAdd(),
+        AppRoutes.HOMEPAGE: (_) => HomePage(),
       },
     );
   }

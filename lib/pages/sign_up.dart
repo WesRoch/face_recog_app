@@ -258,8 +258,8 @@ class _SignUpState extends State<SignUpScreen> {
     print(res.toString());
 
     if (res['success']) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      Route route = MaterialPageRoute(builder: (_) => LoginScreen());
+      Navigator.pushReplacement(context, route);
     } else {
       Fluttertoast.showToast(msg: 'Try again', textColor: Colors.red);
     }

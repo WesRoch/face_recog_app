@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MissingPerson {
   MissingPerson({
@@ -19,7 +20,7 @@ class MissingPerson {
   String personPlace;
   String personDetails;
   int personUserId;
-  String personImage;
+  XFile personImage;
 
   factory MissingPerson.fromJson(Map<String, dynamic> json) => MissingPerson(
         personId: json["id"],
@@ -29,7 +30,7 @@ class MissingPerson {
         personPlace: json["place_of_disappearance"],
         personDetails: json["disappearance_details"],
         personUserId: json["user_id"],
-        personImage: json["person_image"],
+        personImage: json["pic"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -40,7 +41,7 @@ class MissingPerson {
         "place_of_disappearance": personPlace,
         "disappearance_details": personDetails,
         "user_id": personUserId,
-        "personImage": personImage,
+        "pic": personImage,
       };
 }
 // class MissingPerson {

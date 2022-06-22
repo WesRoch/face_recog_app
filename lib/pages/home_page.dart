@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
 import 'missing_person_add.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +59,10 @@ class HomePage extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.person_add),
                     onPressed: () {
-                      Navigator.of(context).pushNamed(AppRoutes.PERSON_FORM);
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new MissingPersonAdd()));
                     },
                   ),
                   IconButton(

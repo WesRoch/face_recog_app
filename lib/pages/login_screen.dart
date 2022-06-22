@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:convert';
+
 import 'package:face_recog_app/pages/home_page.dart';
 import 'package:face_recog_app/pages/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:face_recog_app/api/rest_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -30,17 +33,19 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5,
         onPressed: () {
-          _emailController.text.isNotEmpty &&
-                  _passwordController.text.isNotEmpty
-              ? doLogin(_emailController.text, _passwordController.text)
-              : Fluttertoast.showToast(
-                  msg: "All fields are required",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const HomePage()));
+          // _emailController.text.isNotEmpty &&
+          //         _passwordController.text.isNotEmpty
+          //     ? doLogin(_emailController.text, _passwordController.text)
+          //     : Fluttertoast.showToast(
+          //         msg: "All fields are required",
+          //         toastLength: Toast.LENGTH_SHORT,
+          //         gravity: ToastGravity.CENTER,
+          //         timeInSecForIosWeb: 1,
+          //         backgroundColor: Colors.red,
+          //         textColor: Colors.white,
+          //         fontSize: 16.0);
         },
         padding: EdgeInsets.all(15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -210,15 +215,17 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  doLogin(String email, String password) async {
+  doLogin(String userEmail, String userPassword) async {
     _sharedPreferences = await SharedPreferences.getInstance();
-    var res = await userLogin(email.trim(), password.trim());
+    var res = await userLogin(userEmail.trim(), userPassword.trim());
+    // ignore: avoid_print
     print(res.toString());
 
     if (res['success']) {
       //set data
-      String userEmail = res['user']["email"];
-      String userId = res['user']["id"];
+      String userId = res['user'][0]['id'];
+      String userEmail = res['user'][0]['email'];
+
       _sharedPreferences.setString('userid', userId);
       _sharedPreferences.setString('useremail', userEmail);
 
